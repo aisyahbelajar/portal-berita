@@ -1,15 +1,20 @@
 <?php
 
+use App\Models\News;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [NewsController::class, 'index']);
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $news = News::all(); // Ambil semua data berita langsung dari model
+
+    return Inertia::render('Dashboard', [
+        'news' => $news
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -19,3 +24,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+

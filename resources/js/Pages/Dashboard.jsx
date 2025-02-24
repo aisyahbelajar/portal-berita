@@ -1,24 +1,47 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
+import React from "react";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
-        >
+        <AuthenticatedLayout>
             <Head title="Dashboard" />
+            <div className="w-full h-56">
+                <img
+                    src="https://asset-2.tstatic.net/jateng/foto/bank/images/Kabinet-Prabowo-Gibran.jpg"
+                    alt=""
+                    className="w-full h-72"
+                />
+            </div>
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
-                        </div>
-                    </div>
+            <div className="min-h-screen bg-white text-white px-8 py-10">
+                {/* Grid Layout untuk Card */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {props.news && props.news.length > 0 ? (
+                        props.news.map((data, i) => (
+                            <div
+                                key={i}
+                                className="bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                            >
+                                <h2 className="text-2xl font-semibold text-yellow-400">
+                                    {data.title}
+                                </h2>
+                                <p className="text-gray-300 mt-2">
+                                    {data.description}
+                                </p>
+                                <p className="text-sm text-gray-400 mt-4">
+                                    <strong>Kategori:</strong> {data.category}
+                                </p>
+                                <p className="text-sm text-gray-400">
+                                    <strong>Penulis:</strong> {data.author}
+                                </p>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-center text-gray-400 text-xl col-span-full">
+                            Saat ini belum ada berita.
+                        </p>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>
