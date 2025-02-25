@@ -9,23 +9,35 @@ export default function DashboardLayout({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
-    return (
-        <div className="min-h-screen bg-gray-900">
-            <nav className="fixed w-full border-b border-gray-100 bg-white">
-                <div className="container mx-auto flex h-16 items-center justify-between px-6 md:px-0">
-                    {/* Logo + Navigation */}
-                    <div className="flex items-center">
-                        <Link href="/" className="flex items-center">
-                            <ApplicationLogo className="h-9 w-auto fill-current text-gray-800" />
-                        </Link>
+    const categories = [
+        { name: "Olahraga", url: "/sport" },
+        { name: "Politik", url: "/politics" },
+        { name: "Pemilu", url: "/pemilu" },
+        { name: "Ekonomi", url: "/economics" },
+        { name: "Lingkungan", url: "/environtment" },
+        { name: "Sains", url: "/sains" },
+        { name: "Tokoh", url: "/tokoh" },
+        { name: "News Letter", url: "/newsletter" },
+    ];
 
-                        {/* Desktop Navigation */}
-                        <div className="hidden space-x-8 sm:flex sm:ml-10">
+    return (
+        <div className="min-h-screen bg-white">
+            <nav className="fixed w-full border-b bg-white">
+                <div className="container mx-auto flex h-16 items-center justify-between px-6">
+                    {/* Logo + Navigation */}
+                    <div className="flex">
+                        <div className="flex shrink-0 items-center">
+                            <Link href="/">
+                                <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                            </Link>
+                        </div>
+
+                        <div className="hidden space-x-2 sm:-my-px sm:ms-10 sm:flex">
                             <NavLink
                                 href={route("dashboard")}
                                 active={route().current("dashboard")}
                             >
-                                Dashboard
+                                Berita Jaman Doloe
                             </NavLink>
                         </div>
                     </div>
@@ -76,13 +88,13 @@ export default function DashboardLayout({ header, children }) {
                     <div className="hidden sm:flex space-x-4">
                         <a
                             href="/login"
-                            className="px-4 py-2 text-sm font-medium text-gray-700 transition bg-gray-200 rounded-md hover:bg-gray-300"
+                            className="px-4 py-2 text-sm font-medium text-gray-700 transition bg-gray-200  hover:bg-gray-300"
                         >
                             Login
                         </a>
                         <a
                             href="/register"
-                            className="px-4 py-2 text-sm font-medium text-white transition bg-blue-600 rounded-md hover:bg-blue-700"
+                            className="px-4 py-2 text-sm font-medium text-white transition bg-[#B22222]  hover:bg-blue-700"
                         >
                             Register
                         </a>
@@ -102,26 +114,34 @@ export default function DashboardLayout({ header, children }) {
                         </div>
 
                         <div className="flex flex-col items-center space-y-2 pb-4">
-                            <button className="w-full max-w-xs px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
+                            <a
+                                href="/login"
+                                className="w-full max-w-xs px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                            >
                                 Login
-                            </button>
-                            <button className="w-full max-w-xs px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                            </a>
+                            <a
+                                href="/register"
+                                className="w-full max-w-xs px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                            >
                                 Register
-                            </button>
+                            </a>
                         </div>
                     </div>
                 )}
             </nav>
 
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        {header}
+            <div className="fixed flex w-full top-16 px-8  justify-evenly bg-gray-200">
+                {categories.map((category) => (
+                    <div key={category.url} className="p-2">
+                        <a href={category.url} className="text-gray-500">
+                            {category.name}
+                        </a>
                     </div>
-                </header>
-            )}
+                ))}
+            </div>
 
-            <main>{children}</main>
+            <main className="">{children}</main>
         </div>
     );
 }
